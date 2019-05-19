@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{common/homelayout}">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/homepage/index.css}" />
+    <title>customers Management App - Add a New Customer</title>
+</head>
+<body onload="document.querySelector('#customerNumber').focus();" style="padding-bottom: 155px;">
+    <th:block layout:fragment="content">
+        <form id="customerForm" method="post" action="/customer/save" th:object="${customer}">
+            <fieldset>
+                <legend>New Customer Form</legend>
+                <input type="hidden" name="customerId" th:value="${customer.customerId}" />
+
+                <div class="form-group">
+                    <label for="customerNumber">Customer Number</label>
+                    <span th:if="${#fields.hasErrors('customerNumber')}" th:errors="*{customerNumber}"
+									class="alert alert-danger"></span>
+                    <input id="customerNumber" name="customerNumber" type="text" class="form-control" th:value="${customer.customerNumber}">
+                </div>
+                <div class="form-group">
+                        <label for="name">Name</label>
+                        <span th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
+                                        class="alert alert-danger"></span>
+                        <input id="name" name="customerName" type="text" class="form-control" th:value="${customer.customerName}">
+                </div>               
+                <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                            class="alert alert-danger"></span>
+                        <input id="phoneNumber" name="phoneNumber" type="text" class="form-control" th:value="${customer.phoneNumber}">
+                </div>                
+                <div class="form-group">
+                        <label for="dateOfBirth">Date of birth</label>
+                        <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"
+                            class="alert alert-danger"></span>
+                        <input id="dateOfBirth" name="dateOfBirth" type="date" class="form-control" th:value="${customer.dateOfBirth}">
+
+                </div>    
+                <div style="float:right;">
+                    <a href="/customers/list" class="btn btn-outline-warning">Cancel</a>&nbsp;&nbsp;&nbsp;
+                    <button id="btnSubmit" type="submit" class="btn btn-outline-success">Add customer</button>
+                </div>
+            </fieldset>
+        </form>
+    </th:block>
+
+    <th:block layout:fragment="footer"></th:block>
+
+</body>
+</html>

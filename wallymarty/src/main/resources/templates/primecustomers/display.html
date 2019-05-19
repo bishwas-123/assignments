@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/homelayout}">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/products/index.css}" />
+    <title>Products Management App - Browse List of Products</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div>
+        <span style="font-size: 1.5em">List of Products in stock</span>
+        <span style="float:right;">
+                <a class="btn btn-outline-success btn-lg" href="/primecustomer/newItem/">Add a New primecustomer</a>
+
+            </span>
+    </div>
+    <p>&nbsp;</p>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">primecustomer Number</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Date of Birth</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Alternative non-obstrusive js solution for <tr onclick>:
+            HTML markup: <tr data-href="some-url">
+            JS function using JQuery: $('tr[data-href]').on("click", function() {
+                                        document.location = $(this).data('href');
+                                    });
+
+                                    th:onclick="@{document.location='/primecustomers/update/{productId}'(productId=${product.productId})}"
+                                    th:onclick="@{document.location='/primecustomers/update/{productId}'(productId=${product.productId})}"
+         -->
+        <tr class="datarow" th:each="primecustomer,iterStat : ${primecustomers}"   >
+            <th scope="row" th:text="${iterStat.count}+'.'"></th>
+            <td th:text="${primecustomer.customerNumber}"></td>
+            <td th:text="${primecustomer.customerName}"></td>
+            <td th:text="${primecustomer.phoneNumber}"></td>
+            <td th:text="${primecustomer.dateOfBirth}"></td>
+            <td>
+                <a th:href="@{'/primecustomers/update/' + ${primecustomer.customerId}}"><i style="color:green;" class="fa fa-edit fa-lg"  aria-hidden="true"> </i></a>&nbsp;
+                <a th:href="@{'/primecustomers/delete/' + ${primecustomer.customerId}}"><i style="color:darkred" class="fa fa-trash fa-lg"  aria-hidden="true"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+
+<th:block layout:fragment="footer"></th:block>
+
+</body>
+</html>

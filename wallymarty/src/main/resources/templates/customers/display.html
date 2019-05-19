@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{common/homelayout}">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/products/index.css}" />
+    <title>Products Management App - Browse List of Products</title>
+</head>
+<body>
+    <th:block layout:fragment="content">
+        <div>
+            <span style="font-size: 1.5em">List of Products in stock</span>
+            <span style="float:right;">
+                <a class="btn btn-outline-success btn-lg" href="/customer/newItem/">Add a New Customer</a>
+
+            </span>
+        </div>
+        <p>&nbsp;</p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Customer Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Date of Birth</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<!-- Alternative non-obstrusive js solution for <tr onclick>:
+            		HTML markup: <tr data-href="some-url">
+            		JS function using JQuery: $('tr[data-href]').on("click", function() {
+    											document.location = $(this).data('href');
+											});
+
+											th:onclick="@{document.location='/customers/update/{productId}'(productId=${product.productId})}"
+											th:onclick="@{document.location='/customers/update/{productId}'(productId=${product.productId})}"
+            	 -->
+                <tr class="datarow" th:each="customer,iterStat : ${customers}"   >
+                    <th scope="row" th:text="${iterStat.count}+'.'"></th>
+                    <td th:text="${customer.customerNumber}"></td>
+                    <td th:text="${customer.customerName}"></td>
+                    <td th:text="${customer.phoneNumber}"></td>
+                    <td th:text="${customer.dateOfBirth}"></td>
+                    <td>
+                        <a th:href="@{'/customers/update/' + ${customer.customerId}}"><i style="color:green;" class="fa fa-edit fa-lg"  aria-hidden="true"> </i></a>&nbsp;
+                        <a th:href="@{'/customers/delete/' + ${customer.customerId}}"><i style="color:darkred" class="fa fa-trash fa-lg"  aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <th:block layout:fragment="footer"></th:block>
+    
+</body>
+</html>
